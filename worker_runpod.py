@@ -31,9 +31,9 @@ with torch.inference_mode():
     pipe = CogVideoXPipeline.from_pretrained("/content/model", torch_dtype=torch.bfloat16)
     pipe.enable_model_cpu_offload()
     
-    # pipe.scheduler = CogVideoXDPMScheduler.from_config(pipe.scheduler.config, timestep_spacing="trailing")
-    # pipe.transformer.to(memory_format=torch.channels_last)
-    # pipe.transformer = torch.compile(pipe.transformer, mode="max-autotune", fullgraph=True)
+    pipe.scheduler = CogVideoXDPMScheduler.from_config(pipe.scheduler.config, timestep_spacing="trailing")
+    pipe.transformer.to(memory_format=torch.channels_last)
+    pipe.transformer = torch.compile(pipe.transformer, mode="max-autotune", fullgraph=True)
 
 @torch.inference_mode()
 def generate(input):
