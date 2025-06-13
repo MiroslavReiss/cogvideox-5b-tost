@@ -67,7 +67,7 @@ def generate(input):
         use_dynamic_cfg=use_dynamic_cfg,
         output_type="pt",
         guidance_scale=guidance_scale,
-        generator=torch.Generator(device="cuda").manual_seed(seed),
+        generator=torch.Generator(device="cpu").manual_seed(seed),
     ).frames
 
     batch_size = video_pt.shape[0]
