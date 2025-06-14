@@ -58,7 +58,7 @@ def generate(input):
         num_videos_per_prompt=1,
         num_inference_steps=num_inference_steps,
         num_frames=num_frames,
-        use_dynamic_cfg=use_dynamic_cfg,More actions
+        use_dynamic_cfg=use_dynamic_cfg,
         output_type="pt",
         guidance_scale=guidance_scale,
         generator=torch.Generator(device="cpu").manual_seed(seed),
