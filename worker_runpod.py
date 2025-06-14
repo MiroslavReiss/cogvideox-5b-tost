@@ -29,17 +29,11 @@ def save_video(tensor: Union[List[np.ndarray], List[PIL.Image.Image]], fps: int 
 
 with torch.inference_mode():
     pipe = CogVideoXPipeline.from_pretrained("/content/model", torch_dtype=torch.bfloat16)
-    #pipe.enable_model_cpu_offload()
-    
-    # pipe.enable_model_cpu_offload()
-    pipe.scheduler = CogVideoXDPMScheduler.from_config(pipe.scheduler.config, timestep_spacing="trailing")
-    pipe.transformer.to(memory_format=torch.channels_last)
-    try:
-        pipe.transformer = torch.compile(pipe.transformer, mode="max-autotune", fullgraph=True)
-    except Exception as e:
-        print(f"torch.compile failed: {e}, continuing without it")
+    pipe.enable_model_cpu_offload()
 
-
+    # pipe.scheduler = CogVideoXDPMScheduler.from_config(pipe.scheduler.config, timestep_spacing="trailing")
+    # pipe.transformer.to(memory_format=torch.channels_last)
+    # pipe.transformer = torch.compile(pipe.transformer, mode="max-autotune", fullgraph=True)
 
 @torch.inference_mode()
 def generate(input):
@@ -64,7 +58,7 @@ def generate(input):
         num_videos_per_prompt=1,
         num_inference_steps=num_inference_steps,
         num_frames=num_frames,
-        use_dynamic_cfg=use_dynamic_cfg,
+        use_dynamic_cfg=use_dynamic_cfg,More actions
         output_type="pt",
         guidance_scale=guidance_scale,
         generator=torch.Generator(device="cpu").manual_seed(seed),
